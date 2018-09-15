@@ -1,0 +1,33 @@
+{
+  "name": "templyte",
+  "version": "1.0.0",
+  "description": "Simple Javascript string template. Useful for simple string translations and text replacing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest --roots=test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiroDiaz/templyte.git"
+  },
+  "keywords": [
+    "template",
+    "template-engine",
+    "string",
+    "template",
+    "javascript",
+    "node.js"
+  ],
+  "author": "Siro Díaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SiroDiaz/templyte/issues"
+  },
+  "homepage": "https://github.com/SiroDiaz/templyte#readme",
+  "dependencies": {
+    "escape-string-regexp": "^1.0.5"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
