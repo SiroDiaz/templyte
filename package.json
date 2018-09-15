@@ -4,7 +4,7 @@
   "description": "Simple Javascript string template. Useful for simple string translations and text replacing.",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest --roots=test"
+    "test": "node_modules/.bin/jest --roots=test"
   },
   "repository": {
     "type": "git",
