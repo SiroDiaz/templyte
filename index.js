@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const escapeStringRegexp = require('escape-string-regexp');
 
 /**
@@ -18,7 +17,7 @@ module.exports.renderString = function(str, data, delimiters) {
 
   if(delimiters === undefined) {
     delimiters = ['{{', '}}'];
-  } else if(_.isArray(delimiters) && delimiters.length !== 2) {
+  } else if(Array.isArray(delimiters) && delimiters.length !== 2) {
     throw new TypeError('Array should have an open and closing delimiter');
   }
 
