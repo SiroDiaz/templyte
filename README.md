@@ -22,7 +22,21 @@ let myString = templyte.renderString('Hello {{who}}!', {who: 'world'});
 console.log(myString);  // Hello world!
 ```
 
+## Security
+
+If you discover any security related issues, use the issue tracker.
+
+## Credits
+
+- [Siro Díaz Palazón][link-author]
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/SiroDiaz/templyte/master.svg?style=flat-square
 
-[link-travis]: https://travis-ci.org/SiroDiaz/RandImgProvider
+[link-author]: https://github.com/SiroDiaz
+[link-travis]: https://travis-ci.org/SiroDiaz/templyte
