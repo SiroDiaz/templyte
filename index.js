@@ -27,7 +27,6 @@ module.exports.renderString = function(str, data, delimiters) {
   let entries;
 
   while((entries = extractVarPattern.exec(renderedStr)) !== null) {
-    // console.log(entries);
     if(!data.hasOwnProperty(entries[1])) {
       throw entries[1] +' is not defined';
     }
