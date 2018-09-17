@@ -2,6 +2,14 @@
 var templyte = require('./../index');
 
 describe('Testing the string template engine', function () {
+  let params = {
+    name: 'Siro',
+    location: 'Spain',
+    birth: (new Date(1993, 5, 30)).toDateString()
+  };
+  let expectedString1 = 'Siro from Spain',
+    expectedString2 = 'Siro from Spain born at '+ params.birth;
+
   it('should render an empty string', function () {
     expect(templyte.renderString('')).toBe('');
   });
@@ -17,27 +25,66 @@ describe('Testing the string template engine', function () {
     expect(templyte.renderString('{{ name }}', params)).toEqual(params.name);
   });
 
+  /**
+   *
+   */
   it('should render two or more parameters', function () {
-    var params = {
-      name: 'Siro',
-      location: 'Spain',
-      birth: (new Date(1993, 5, 30)).toDateString()
-    };
-    var expectedString1 = 'Siro from Spain',
-      expectedString2 = 'Siro from Spain born at '+ params.birth;
     expect(templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params)).toEqual(expectedString2);
     expect(templyte.renderString('{{name}} from {{location}}', params)).toEqual(expectedString1);
   });
 
-  it('should render two or more parameters', function () {
-    var params = {
-      name: 'Siro',
+  /**
+   *
+   */
+  it('should render a variable with custom tags successfully', function () {
+    const obj = { name: 'Siro' };
+    const delimiters = ['{', '}'];
+    expect(templyte.renderString('{name}', obj, delimiters)).toEqual(obj.name);
+    expect(templyte.renderString('{ name }', obj, delimiters)).toEqual(obj.name);
+  });
+
+  /**
+   *
+   */
+  it('should render a string with a custom template tags', function () {
+    let delimiters = ['[[', ']]'];
+
+    expect(
+      templyte.renderString('[[ name ]] from [[location]] born at [[ birth ]]', params, delimiters)
+    ).toEqual(expectedString2);
+    expect(
+      templyte.renderString('[[name]] from [[location]]', params, delimiters)
+    ).toEqual(expectedString1);
+
+    delimiters = ['<<', '>>'];
+
+    expect(
+      templyte.renderString('<< name >> from <<location>> born at << birth >>', params, delimiters)
+    ).toEqual(expectedString2);
+    expect(
+      templyte.renderString('<< name >> from << location >>', params, delimiters)
+    ).toEqual(expectedString1);
+  });
+
+  it('should render a string with the same tags of open and close', function () {
+    params = {
+      name: '{{Siro}}',
       location: 'Spain',
       birth: (new Date(1993, 5, 30)).toDateString()
     };
-    var expectedString1 = 'Siro from Spain',
-      expectedString2 = 'Siro from Spain born at '+ params.birth;
-    expect(templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params)).toEqual(expectedString2);
-    expect(templyte.renderString('{{name}} from {{location}}', params)).toEqual(expectedString1);
+    let expectedString = '{{Siro}} from Spain born at '+ params.birth;
+
+    expect(templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params)).toEqual(expectedString);
+    expectedString = '{{Siro}} from Spain';
+    expect(templyte.renderString('{{name}} from {{location}}', params)).toEqual(expectedString);
+  });
+
+  it('should throw an exception if delimiters are invalid', function () {
+    let delimiters = [];
+    expectedString1 = '{{Siro}} from Spain';
+    expectedString2 = '{{Siro}} from Spain born at '+ params.birth;
+    expect(() => (
+      templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params, delimiters)
+    )).toThrow();
   });
 });

@@ -1,5 +1,18 @@
+const _ = require('lodash');
 const escapeStringRegexp = require('escape-string-regexp');
 
+/**
+ * Renders a string template and returns it with all variables replaced
+ * in the string.
+ * - Examples of usage:
+ * templyte.renderString('Hello {{who}}!', {who: 'world'});
+ * templyte.renderString('Hello {{who}}!', {who: 'world'}, ['<%=', '%>'])
+ *
+ * @param str string
+ * @param data object a key-value pair used to replace in the string.
+ * @param delimiters undefined|array contains the open and close token to replace in the string
+ * @returns string the rendered template string
+ */
 module.exports.renderString = function(str, data, delimiters) {
   let renderedStr = str;
 
@@ -10,15 +23,16 @@ module.exports.renderString = function(str, data, delimiters) {
   }
 
   const d = delimiters.map((delimiter) => escapeStringRegexp(delimiter));
-  const extractVarPattern = new RegExp(d[0] + '\\s*([A-Za-z0-9]+)\\s*' + d[1], 'g');
+  const extractVarPattern = new RegExp(d[0] + '\\s*([A-Za-z0-9]+)\\s*' + d[1], 'gm');
   let entries;
 
   while((entries = extractVarPattern.exec(renderedStr)) !== null) {
+    // console.log(entries);
     if(!data.hasOwnProperty(entries[1])) {
       throw entries[1] +' is not defined';
     }
 
-    const itemPattern = new RegExp(d[0] + '\\s*' + entries[1] + '\\s*' + d[1], 'g');
+    const itemPattern = new RegExp(d[0] + '\\s*' + entries[1] + '\\s*' + d[1], 'gm');
     renderedStr = renderedStr.replace(itemPattern, data[entries[1]]);
   }
 
