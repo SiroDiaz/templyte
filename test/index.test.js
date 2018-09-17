@@ -83,8 +83,25 @@ describe('Testing the string template engine', function () {
     let delimiters = [];
     expectedString1 = '{{Siro}} from Spain';
     expectedString2 = '{{Siro}} from Spain born at '+ params.birth;
+
     expect(() => (
       templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params, delimiters)
+    )).toThrow();
+
+    expect(() => (
+      templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params, {})
+    )).toThrow();
+
+    expect(() => (
+      templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params, null)
+    )).toThrow();
+
+    expect(() => (
+      templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params, ['{{'])
+    )).toThrow();
+
+    expect(() => (
+      templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params, ['{{', '}}', '{{'])
     )).toThrow();
   });
 });

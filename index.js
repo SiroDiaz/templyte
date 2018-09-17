@@ -19,7 +19,7 @@ module.exports.renderString = function(str, data, delimiters) {
   if(delimiters === undefined) {
     delimiters = ['{{', '}}'];
   } else if(_.isArray(delimiters) && delimiters.length !== 2) {
-    throw 'Array should have an open and closing delimiter';
+    throw new TypeError('Array should have an open and closing delimiter');
   }
 
   const d = delimiters.map((delimiter) => escapeStringRegexp(delimiter));
