@@ -22,6 +22,15 @@ let myString = templyte.renderString('Hello {{who}}!', {who: 'world'});
 console.log(myString);  // Hello world!
 ```
 
+Also you can use a custom template tag like *"[[ variable ]]"* just adding third parameter to
+renderString method.
+```javascript
+const templyte = require('templyte');
+const delimiters = ['[[', ']]'];
+let myString = templyte.renderString('Hello [[who]]!', {who: 'world'}, delimiters);
+```
+The renderString will escape the delimiters for regular expression security.
+
 ## Security
 
 If you discover any security related issues, use the issue tracker.
