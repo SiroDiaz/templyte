@@ -104,4 +104,11 @@ describe('Testing the string template engine', function () {
       templyte.renderString('{{ name }} from {{location}} born at {{ birth }}', params, ['{{', '}}', '{{'])
     )).toThrow();
   });
+
+  it('should render a url query string', () => {
+    params = {lang: 'es', q: 'google'};
+    const output = templyte.renderString('https://encrypted.google.com/search?hl={{lang}}&q={{q}}', params);
+    const expectedString = 'https://encrypted.google.com/search?hl=es&q=google';
+    expect(output).toEqual(expectedString);
+  });
 });
