@@ -1,0 +1,25 @@
+name: Test library
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node: [ 14, 16, 18 ]
+    name: Node ${{ matrix.node }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - name: install dependencies
+        run: npm install --no-audit --no-fund --no-optional
+      - name: run linter and tests
+        run: npm test
