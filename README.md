@@ -1,7 +1,7 @@
 # templyte
 
 [![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
+[![Test library](https://github.com/SiroDiaz/templyte/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/SiroDiaz/templyte/actions/workflows/test.yml)
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3XKLA6VTYVSKW&source=url)
 
 
