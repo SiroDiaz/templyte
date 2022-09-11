@@ -8,7 +8,7 @@
 Simple and lightweight Javascript string template. Useful for simple string translations and text replacing.
 
 ## install
-You can install it if your Node.JS version is >= 6.x. Then run the following command:
+You can install it if your Node.JS version is >= 14.x. Then run the following command:
 ```bash
 > npm install templyte --save
 ```

@@ -1,10 +1,26 @@
 {
   "name": "templyte",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Simple Javascript string template. Useful for simple string translations and text replacing.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=14.16"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
-    "test": "node_modules/.bin/jest --roots=test"
+    "build": "tsc",
+    "prebuild": "npm run test",
+    "lint": "xo !*.config.js",
+    "lint:fix": "xo --fix",
+    "test": "jest --config jest.config.js",
+    "pretest": "xo !jest.config.js",
+    "test:watch": "jest --watch",
+    "prepublish": "npm unlink && npm run build"
   },
   "repository": {
     "type": "git",
@@ -16,6 +32,8 @@
     "string",
     "template",
     "javascript",
+    "ts",
+    "typescript",
     "node.js"
   ],
   "author": "Siro Díaz",
@@ -25,9 +43,27 @@
   },
   "homepage": "https://github.com/SiroDiaz/templyte#readme",
   "dependencies": {
-    "escape-string-regexp": "^1.0.5"
+    "escape-string-regexp": "4.0.0"
   },
   "devDependencies": {
-    "jest": "^23.6.0"
+    "@types/jest": "^29.0.0",
+    "husky": "^8.0.1",
+    "jest": "^29.0.3",
+    "lint-staged": "^13.0.3",
+    "ts-jest": "^29.0.0",
+    "tsd": "^0.23.0",
+    "typescript": "^4.8.3",
+    "xo": "^0.52.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "xo --fix",
+      "git add"
+    ]
   }
 }
