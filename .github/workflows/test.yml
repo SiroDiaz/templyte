@@ -20,6 +20,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: install dependencies
-        run: npm install --no-audit --no-fund --no-optional
+        run: npm install
       - name: run linter and tests
         run: npm test
