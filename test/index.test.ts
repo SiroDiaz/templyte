@@ -1,4 +1,4 @@
-import renderString from '..';
+import renderString, {countTokens, getTokens} from '..';
 
 type ParameterType = {
 	name: string;
@@ -14,6 +14,23 @@ describe('Testing the string template engine', () => {
 	};
 	const expectedString1 = 'Siro from Spain';
 	const expectedString2 = 'Siro from Spain born at ' + parameters.birth!;
+
+	it('should return a list of variables name or identifiers in the string', () => {
+		expect(getTokens('templyte is quite simple')).toHaveLength(0);
+		expect(getTokens('templyte is quite simple')).toEqual([]);
+		expect(getTokens('templyte is {{ mode }}')).toHaveLength(1);
+		expect(getTokens('templyte is {{ mode }}')).toEqual(['mode']);
+		expect(getTokens('templyte was designed by {{name}} from {{ country}}')).toHaveLength(2);
+		expect(getTokens('templyte was designed by {{name}} from {{ country}}')).toEqual(['name', 'country']);
+		expect(getTokens('templyte was designed by {{name}} from {{ country}}')).toEqual(['name', 'country']);
+		expect(getTokens('templyte was designed by [[name]] from [[ country]]}}', ['[[', ']]'])).toEqual(['name', 'country']);
+	});
+
+	it('should return the number of variables inside the string', () => {
+		expect(countTokens('templyte is quite simple')).toEqual(0);
+		expect(countTokens('templyte is {{ mode }}')).toEqual(1);
+		expect(countTokens('templyte was designed by {{name}} from {{ country}}')).toEqual(2);
+	});
 
 	it('should render an empty string', () => {
 		expect(renderString('')).toBe('');

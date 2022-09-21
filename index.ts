@@ -1,8 +1,45 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/prefer-for-of */
 import escapeStringRegexp from 'escape-string-regexp';
+
+export type DelimiterType = [string, string];
+
+/**
+ * Get all tokens from the string. In this case, only identifiers between
+ * delimiters. This function doesn't replace identifiers, just returns an
+ * array with the identifiers name.
+ *
+ * @param {string} templateString
+ * @param {[string,string]|undefined} delimiters
+ * @returns {string[]}
+ */
+export const getTokens: (templateString: string, delimiters?: DelimiterType) => string[] = (
+	templateString,
+	delimiters = ['{{', '}}'],
+) => {
+	const d = delimiters.map(delimiter => escapeStringRegexp(delimiter));
+	const extractVarPattern = new RegExp(d[0] + '\\s*([A-Za-z0-9]+)\\s*' + d[1], 'gm');
+
+	const variables = templateString.match(extractVarPattern);
+
+	if (!variables) {
+		return [];
+	}
+
+	return variables.map(variable => extractVarPattern.exec(templateString)![1]);
+};
+
+/**
+ * Count tokens is a function built on top getTokens. It is just a wrapper
+ * that pretends to be more concise. Under the hood, this funtion executes
+ * the parser only one time.
+ *
+ * @param {string} templateString
+ * @param {[string,string]|undefined} delimiters
+ * @returns {number}
+ */
+export const countTokens: (templateString: string, delimiters?: DelimiterType) => number = (
+	templateString,
+	delimiters = ['{{', '}}'],
+) => getTokens(templateString, delimiters).length;
 
 /**
  * Renders a string template and returns it with all variables replaced
@@ -35,7 +72,7 @@ const renderString = (string_: string, data?: Record<string, unknown>, delimiter
 		return string_;
 	}
 
-	for (let i = 0; i < variables.length; i++) {
+	for (const _ of variables) {
 		entries = extractVarPattern.exec(string_);
 		const attr: string = entries![1];
 		if (!(attr in data!)) {

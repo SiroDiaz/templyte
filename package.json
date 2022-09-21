@@ -1,6 +1,6 @@
 {
   "name": "templyte",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Simple Javascript string template. Useful for simple string translations and text replacing.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +16,7 @@
     "build": "tsc",
     "prebuild": "npm run test",
     "lint": "xo !*.config.js",
-    "lint:fix": "xo --fix",
+    "lint:fix": "xo !*.config.js --fix",
     "test": "jest --config jest.config.js",
     "pretest": "xo !jest.config.js",
     "test:watch": "jest --watch",
